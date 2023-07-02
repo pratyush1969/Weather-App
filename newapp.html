@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: black;
+    height:100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main{
+    width:400px;
+    height:400px;
+    border-radius: 20px;
+    background-color: darkcyan;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+.input-element{
+    margin-top: 40px;
+}
+input{
+    width:300px;
+    height:30px;
+    border: none;
+    outline: none;
+    background-color: black;;
+    font-size: larger;
+    color:white;
+    padding-left: 20px;
+    border-radius: 20px
+}
+
+button{
+    height:30px;
+    width:30px;
+    border-radius: 50%;
+    cursor:pointer
+}
+/*.image{
+    margin-top: -180px;
+    width:200px;
+    height:200px;
+    border:1px solid red
+}*/
+h1{margin-top: -100px;
+    font-weight: 800;
+    font-size: xxx-large;
+}
+.text{
+    text-align: center;
+    margin-left: -15px;
+    margin-top: 10px;
+}
+p{margin-top: 30px;
+    color: white;
+}
+/*.pic{
+    width: 80px;
+    height: 80px;
+    background-color: darkcyan;
+    border: 1px solid cyan;
+    margin-right: 15px;
+}*/
+
+    </style>
+</head>
+<body>
+    
+<div class="main">
+    <div class="input-element">
+        <input type="text" placeholder="Enter The City" id="input-text">
+        <button class="fa-sharp fa-solid fa-magnifying-glass"></button>
+    </div>
+  <div class="texts">
+    <h1 class="heading" id="celcius">0°C</h1>
+    <h2 class="text">Clear</h2>
+    <div class="pic">
+        
+    </div>
+  </div>
+  <div class="footer">
+    <div class="humudity">
+     <p>the humudity is <span id="hum">0%</span></p> 
+    </div>
+    <div class="wind">
+        <p>The wind speed is <span id="air">0 </span>KM/HR</p> 
+       </div>
+  </div>
+</div>
+
+
+
+
+ <script>
+     const input = document.querySelector("#input-text")
+const btn = document.querySelector("button")
+const celcius = document.querySelector("#celcius")
+const heading = document.querySelector("h2");
+const hum = document.querySelector("#hum")
+const air = document.querySelector("#air")
+const pic=document.querySelector(".pic")
+async function weather(city) {
+    const API_KEY = "e0738db10be6671e3e1e622bd0f30dfa"
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+    const data = await fetch(`${url}`).then(response => response.json());
+   console.log(data)
+   celcius.innerHTML=`${Math.round(data.main.temp-273.15)}°C`;
+   heading.innerHTML=`${data.weather[0].description}`
+   hum.innerHTML=`${data.main.humidity}`
+   air.innerHTML=`${data.wind.speed}`
+   pic.innerHTML=`<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="">`
+}
+btn.addEventListener("click", function(){
+    weather(input.value);
+})
+
+
+ </script>   
+</body>
+</html>
